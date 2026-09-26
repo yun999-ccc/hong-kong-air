@@ -11,6 +11,7 @@ function renderEvidence(report) {
     ['提醒命中率', percent(results.trend.precision), '发出提醒后，未来两小时确实达到 7+ 的比例'],
     ['误报负担', results.trend.falseAlertsPerStationWeek.toFixed(3), '每个有效站周的误报小时'],
   ].map(([label, value, note]) => `<div class="evidence-stat"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
+  evidenceEl('evidence-limit').innerHTML = `<strong>漏报也要看见</strong><p>独立测试的 ${split.testEventHours} 个高风险前兆小时中，规则未提醒 ${results.trend.fn} 个。回测只能证明逐站小时判断表现，尚不能证明街道清洁作业、健康或成本收益；因此提醒仅供主管人工复核。</p>`;
   const items = [
     ['趋势规则 · 采用', results.trend, 'selected'],
     ['AQHI ≥ 6 即提醒', results.nearThreshold, ''],
@@ -48,6 +49,7 @@ fetch('./data/backtest-report.json')
   .then(renderEvidence)
   .catch(() => {
     evidenceEl('evidence-decision').textContent = '回测报告暂时无法载入。请通过本地服务器打开项目并检查数据文件。';
+    evidenceEl('evidence-limit').textContent = '漏报数据暂时无法核对，请勿依据本页作出实时作业决策。';
     evidenceEl('replay-summary').textContent = '历史回放不可用';
   });
 

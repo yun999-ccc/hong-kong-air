@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8fbff">
-  <meta name="description" content="香港户外作业空气风险辅助决策原型：18站官方观测、历史短时预警回测与行业可行性分析。">
+  <meta name="description" content="面向香港街道清洁外包运营的空气风险复核方案：18站官方观测、两小时历史回测与行业可行性分析。">
   <title>香港空气风险决策实验室 · 赛道二项目</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./theme-light.css">
-  <link rel="stylesheet" href="./product.css?v=20260926-status">
+  <link rel="stylesheet" href="./product.css?v=20260926-industry-review1">
 </head>
 <body>
   <div class="app-shell">
@@ -28,9 +28,9 @@
     <main>
       <section class="intro" aria-labelledby="page-title">
         <div>
-          <div class="eyebrow"><span class="signal-dot"></span> 城市公共服务 · 户外作业风险辅助决策</div>
-          <h1 id="page-title">让空气风险<span>早一步被看见</span></h1>
-          <p class="intro-copy">面向户外作业主管：查看全港 18 站官方观测，利用历史数据验证两小时高风险前兆提醒，并为作业风险复核提供依据。当前预警功能为历史回放原型，尚未用于实时调度。</p>
+          <div class="eyebrow"><span class="signal-dot"></span> 智慧城市 · 街道清洁作业场景假设</div>
+          <h1 id="page-title">街道清洁作业，<span>提前复核空气风险</span></h1>
+          <p class="intro-copy">以香港街道清洁外包团队主管为首个假设用户：结合全港 18 站官方观测，在安排未来两小时户外任务时，人工复核可能升至较高风险的测站。提前提醒只完成了历史回测，尚未用于实时调度；主管是否需要这种提醒仍待访谈。</p>
         </div>
         <div class="intro-aside">
           <span class="aside-label">数据时间 · 香港时间</span>
@@ -47,6 +47,15 @@
       </section>
 
       <div class="prototype-note"><strong>页面状态</strong><span>地图默认显示官方当前观测；切换“历史回放”后显示测试集数据与预警结果。两种时间不可混作实时预测。</span><a href="#evidence">查看验证方法 →</a></div>
+
+      <section class="industry-brief" id="industry-brief" aria-labelledby="industry-brief-heading">
+        <div class="industry-brief-heading"><span class="small-label">INDUSTRY QUESTION</span><h2 id="industry-brief-heading">一个具体的作业决策，三条清楚的边界</h2><p>需求假设：主管在安排或调整接下来两小时的街道清洁任务时，希望先知道哪些测站值得复核。尚无真实作业流程或主管访谈证明这一需求。</p></div>
+        <div class="industry-brief-rows">
+          <div><span>01 / 已有信息</span><p>官方提供逐站当前 AQHI 和按站型发布的时段预报；网页直接展示这些原始信息。</p></div>
+          <div><span>02 / 项目增量</span><p>用历史数据检验趋势规则，提示未来两小时可能首次达到 AQHI 7+ 的测站，并公开命中、误报和漏报。</p></div>
+          <div><span>03 / 使用边界</span><p>提醒只触发人工复核。测站不代表具体街道，AQHI 7 也不是自动停工阈值。</p></div>
+        </div>
+      </section>
 
       <section class="workspace" aria-label="监测站地图与列表">
         <aside class="station-panel">
@@ -111,6 +120,7 @@
         <div class="section-lead"><div><span class="small-label">EVIDENCE FIRST</span><h2 id="evidence-heading">先验证，再预警</h2></div><p>任务：测站当前 AQHI 低于 7 时，判断未来两小时是否首次达到 7 或以上。只用预测时已经可获得的观测。</p></div>
         <div class="evidence-callout" id="evidence-decision">正在读取回测结果…</div>
         <div class="evidence-stats" id="evidence-stats" aria-live="polite"></div>
+        <div class="evidence-limit" id="evidence-limit" aria-live="polite">正在核对漏报与使用边界…</div>
         <div class="evidence-comparison"><div><h3>独立时间测试结果</h3><p>规则、简单阈值和实验模型使用同一批可评价的逐站小时。指标是逐小时决策表现，不等于独立污染事件数量。</p></div><div id="comparison-table" class="comparison-table"></div></div>
         <p class="evidence-method" id="evidence-method"></p>
       </section>
@@ -121,14 +131,15 @@
       </section>
 
       <section class="workflow-section" id="workflow" aria-labelledby="workflow-heading">
-        <div class="section-lead"><div><span class="small-label">INDUSTRY WORKFLOW</span><h2 id="workflow-heading">给户外作业主管的三步流程</h2></div><p>产品建议，尚未经过真实作业单位试点。系统提供复核提醒，不自动改变排班。</p></div>
-        <div class="workflow-grid"><article><span>01 / 发现</span><h3>识别前兆</h3><p>站点 AQHI 为 6 且较前一小时上升时，标为“未来两小时高风险复核提醒”。同时检查数据是否缺失或过期。</p></article><article><span>02 / 核对</span><h3>结合任务地点</h3><p>主管核对作业地点、任务紧急程度、官方最新信息与站点代表性。邻近测站只能提供参考，不能当作街道级读数。</p></article><article><span>03 / 记录</span><h3>人工决策</h3><p>记录“继续／改时／再核对”及理由。AQHI 7 本身不等于停工建议；较高风险时应依据<a href="https://www.aqhi.gov.hk/sc/health-advice/sub-health-advice.html" target="_blank" rel="noopener noreferrer">环保署户外雇员建议 ↗</a>评估。真实效益仍需试点验证。</p></article></div>
+        <div class="section-lead"><div><span class="small-label">INDUSTRY WORKFLOW</span><h2 id="workflow-heading">街道清洁主管的三步复核流程</h2></div><p>这是待验证的工作流程设计，尚未经过真实作业单位试点。系统只提供复核提醒，不自动改变排班。</p></div>
+        <div class="workflow-grid"><article><span>01 / 发现</span><h3>识别前兆</h3><p>班前或临时调整任务时，若测站 AQHI 为 6 且较前一小时上升，提示主管复核未来两小时的空气风险；先检查读数是否缺失或过期。</p></article><article><span>02 / 核对</span><h3>结合任务地点</h3><p>主管核对清洁任务地点、任务紧急程度、官方最新信息与站点代表性。邻近测站只能提供参考，不能当作街道级读数。</p></article><article><span>03 / 记录</span><h3>人工决策</h3><p>记录“继续／改时／再核对”及理由。AQHI 7 本身不等于停工建议；较高风险时应依据<a href="https://www.aqhi.gov.hk/sc/health-advice/sub-health-advice.html" target="_blank" rel="noopener noreferrer">环保署户外雇员建议 ↗</a>评估。真实效益仍需试点验证。</p></article></div>
       </section>
 
       <section class="feasibility-section" id="feasibility" aria-labelledby="feasibility-heading">
         <div class="section-lead"><div><span class="small-label">VIABILITY</span><h2 id="feasibility-heading">可行性与尚待验证的假设</h2></div><p>把数据证据、设计判断和商业假设分开，避免把原型写成已部署系统。</p></div>
-        <div class="feasibility-grid"><article><span class="feasibility-tag fact">已核实</span><h3>技术与数据</h3><p>环保署提供逐站逐小时历史 AQHI；当前观测与站型预报可接入网页。正式在线预警仍需持续采集最近数小时数据、监控时效和部署服务。</p></article><article><span class="feasibility-tag assumption">待访谈</span><h3>目标用户与市场</h3><p><a href="https://www.fehd.gov.hk/english/legco/2025-26/EEB%28F%29088.pdf" target="_blank" rel="noopener noreferrer">食环署公开资料 ↗</a>证实香港有外判街道清洁服务；这只说明潜在应用场景存在。主管工作流程、采购意愿与可接受误报量仍须访谈验证。</p></article><article><span class="feasibility-tag assumption">待报价</span><h3>成本收益</h3><p>年成本＝数据采集与存储＋模型与网页服务＋通知渠道＋人工维护。收益需用真实任务记录计算节省的复核时间和调整成本，不预填虚构金额。</p></article><article><span class="feasibility-tag risk">须控制</span><h3>风险与责任</h3><p>重点控制漏报、误报、接口中断和测站代表性。过期或缺失时不出新的预警；主管保留最终决定权；不宣称已减少健康损害。</p></article></div>
-        <details class="technical-detail"><summary>查看技术架构与部署缺口</summary><div><p><strong>已有：</strong>官方当前值接口 → 前端数据校验与过期提示 → 18 站地图；官方历史 CSV → 缺失及 * 标记处理 → 按时间切分回测 → 历史回放。</p><p><strong>上线前需要：</strong>定时采集器保存最近至少 3 小时测站数据；每小时运行已验证规则；监控数据延迟；为主管建立通知和处理记录。发生数据中断时停止发出新提醒，并显示官方原始页面链接。</p></div></details>
+        <div class="feasibility-grid"><article><span class="feasibility-tag fact">已核实</span><h3>技术与数据</h3><p>环保署提供逐站逐小时历史 AQHI；当前观测与站型预报可接入网页。正式在线预警仍需持续采集最近数小时数据、监控时效和部署服务。</p></article><article><span class="feasibility-tag assumption">待访谈</span><h3>目标用户与市场</h3><p><a href="https://www.fehd.gov.hk/english/legco/2025-26/EEB%28F%29088.pdf" target="_blank" rel="noopener noreferrer">食环署公开资料 ↗</a>证实香港有外判街道清洁服务。假设使用者是团队主管，购买方可能是承办商或采购单位；试点服务与后续年度服务仅是待验证的收费路径。当前没有购买意愿或市场规模证据。</p></article><article><span class="feasibility-tag assumption">待报价</span><h3>成本与潜在收益</h3><p>年成本需覆盖采集、存储、网页服务、通知与人工维护。可能的收益是减少人工复核时间或更早发现需核对的任务；两者均需试点记录和报价验证，不能从回测准确率直接推算。</p></article><article><span class="feasibility-tag risk">须控制</span><h3>风险与责任</h3><p>重点控制漏报、误报、接口中断和测站代表性。过期或缺失时不出新的预警；主管保留最终决定权；不宣称已减少健康损害。</p></article></div>
+        <div class="technical-architecture" aria-labelledby="technical-architecture-heading"><div class="technical-architecture-title"><span class="small-label">TECHNICAL PATH</span><h3 id="technical-architecture-heading">技术链路与部署边界</h3></div><div class="technical-paths"><div class="technical-path"><span class="feasibility-tag fact">已实现 · 历史验证</span><p>官方历史 CSV <b>→</b> 缺失与 * 标记处理 <b>→</b> 时间切分回测 <b>→</b> 规则对照与地图回放</p></div><div class="technical-path"><span class="feasibility-tag assumption">待建设 · 在线应用</span><p>定时采集并保存近期数据 <b>→</b> 运行规则与时效校验 <b>→</b> 通知主管复核 <b>→</b> 保存处理记录</p></div></div><p class="technical-boundary">数据中断或超过时效阈值时，在线方案应停止发出新提醒；当前静态网页尚不具备在线逐站预警能力。</p></div>
+        <div class="validation-next"><h3>下一步要取得的行业证据</h3><ol><li><strong>访谈：</strong>确认主管的任务安排流程、提醒接收方式和可接受误报量。</li><li><strong>报价：</strong>取得采集服务、通知渠道及维护成本，明确潜在采购方。</li><li><strong>试点：</strong>记录提醒后的人工复核、任务调整及耗时，才能比较实际效果。</li></ol></div>
         <div class="cost-scenario"><div><span class="small-label">ASSUMPTION WORKSHEET</span><h3>试点成本情景计算</h3><p>下面的数字由使用者填写，不是市场报价或已实现收益。只计算节省人工复核时间的情景，未计误报处理和潜在健康收益。</p></div><form id="cost-form" class="cost-form"><label>年需复核次数<input id="cost-checks" type="number" min="0" step="1" inputmode="numeric" placeholder="填入试点估计"></label><label>每次节省分钟<input id="cost-minutes" type="number" min="0" step="0.1" inputmode="decimal" placeholder="填入试点估计"></label><label>人工每小时成本（港元）<input id="cost-hourly" type="number" min="0" step="0.1" inputmode="decimal" placeholder="填入实际成本"></label><label>系统年成本（港元）<input id="cost-annual" type="number" min="0" step="0.1" inputmode="decimal" placeholder="填入实际报价"></label><output id="cost-output">输入四项假设后显示年净额。</output></form></div>
       </section>
 
@@ -150,6 +161,6 @@
     <footer><span>香港空气风险决策实验室 · 赛道二研究原型</span><span>数据来自香港政府开放数据 · 非官方预警平台</span></footer>
   </div>
   <script src="./app.js?v=20260926-status" defer></script>
-  <script src="./evidence.js" defer></script>
+  <script src="./evidence.js?v=20260926-industry-review1" defer></script>
 </body>
 </html>
