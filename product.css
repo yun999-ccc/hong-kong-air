@@ -210,3 +210,5 @@
   .replay-list { grid-template-columns: 1fr; }
   .cost-form { grid-template-columns: 1fr; }
 }
+.forecast-status { margin: 4px 0 18px; color: #476b82; font-size: 12px; line-height: 1.6; }
+.forecast-status.warn { color: #a4513b; }

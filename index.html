@@ -8,7 +8,7 @@
   <title>香港空气风险决策实验室 · 赛道二项目</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./theme-light.css?v=20260926-map-preview2">
-  <link rel="stylesheet" href="./product.css?v=20260926-map-preview2-final">
+  <link rel="stylesheet" href="./product.css?v=20260926-forecast-refresh1">
 </head>
 <body>
   <div class="app-shell">
@@ -147,6 +147,7 @@
 
       <section class="decision-section" aria-labelledby="decision-heading">
         <div class="section-lead"><div><span class="small-label">OFFICIAL FORECAST</span><h2 id="decision-heading">官方时段预报</h2></div><p>官方预报按“一般 / 路边”两类发布；它与上方的逐站历史回测任务不同，不能直接作为同尺度对照。</p></div>
+        <p id="forecast-status" class="forecast-status" role="status">正在检查官方预报 · 每 15 分钟自动检查</p>
         <div id="forecast-grid" class="forecast-grid" aria-live="polite"></div>
       </section>
 
@@ -162,7 +163,7 @@
     </main>
     <footer><span>香港空气风险决策实验室 · 赛道二研究原型</span><span>数据来自香港政府开放数据 · 非官方预警平台</span></footer>
   </div>
-  <script src="./app.js?v=20260926-map-preview2" defer></script>
+  <script src="./app.js?v=20260926-forecast-refresh1" defer></script>
   <script src="./evidence.js?v=20260926-industry-review1" defer></script>
 </body>
 </html>
