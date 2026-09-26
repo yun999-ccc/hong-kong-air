@@ -71,9 +71,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, .station-marker:focu
 .row-symbol.roadside::after { background: #ef795d; }
 .row-copy small { color: #74899a; }
 .row-aqhi { color: #3159e8; }
-.row-aqhi.low { color: #087b72; }
-.row-aqhi.moderate { color: #a95b12; }
-.row-aqhi.high, .row-aqhi.very-high, .row-aqhi.serious { color: #c0364b; }
+.row-aqhi.low { color: #27639e; }
+.row-aqhi.moderate { color: #4452b6; }
+.row-aqhi.high { color: #b84130; }
+.row-aqhi.very-high { color: #ad2c62; }
+.row-aqhi.serious { color: #74409e; }
 .empty-list { color: #6b8292; }
 
 .map-column, .map-toolbar { background: #fff; }
@@ -92,11 +94,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, .station-marker:focu
 .map-area-label { fill: #617971; stroke: #f4edca; }
 .map-water-label { fill: #5691ac; }
 .station-marker .marker-core { stroke: #fff; stroke-width: 2.5; transition: transform .18s ease, fill .18s ease; transform-box: fill-box; transform-origin: center; }
-.station-marker[data-risk="low"] .marker-core { fill: #008f84; }
-.station-marker[data-risk="moderate"] .marker-core { fill: #e5a31b; }
-.station-marker[data-risk="high"] .marker-core { fill: #ec6a3d; }
-.station-marker[data-risk="very-high"] .marker-core { fill: #d84158; }
-.station-marker[data-risk="serious"] .marker-core { fill: #953d83; }
+.station-marker[data-risk="low"] .marker-core { fill: #3f8fd2; }
+.station-marker[data-risk="moderate"] .marker-core { fill: #6272db; }
+.station-marker[data-risk="high"] .marker-core { fill: #f27662; }
+.station-marker[data-risk="very-high"] .marker-core { fill: #d94d83; }
+.station-marker[data-risk="serious"] .marker-core { fill: #8550b2; }
 .station-marker[data-risk="unknown"] .marker-core { fill: #8795a2; }
 .station-marker .marker-halo { fill: #3159e861; }
 .station-marker:hover .marker-core, .station-marker.selected .marker-core, .station-marker:focus .marker-core { transform: scale(1.28); }
@@ -107,11 +109,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, .station-marker:focu
 .legend-types { border-top: 1px solid #e3edf2; padding-top: 6px; }
 .map-legend span { white-space: nowrap; }
 .legend-dot { display: inline-block; width: 9px; height: 9px; flex: none; }
-.legend-dot.low { background: #008f84; }
-.legend-dot.moderate { background: #e5a31b; }
-.legend-dot.high { background: #ec6a3d; }
-.legend-dot.very-high { background: #d84158; }
-.legend-dot.serious { background: #953d83; }
+.legend-dot.low { background: #3f8fd2; }
+.legend-dot.moderate { background: #6272db; }
+.legend-dot.high { background: #f27662; }
+.legend-dot.very-high { background: #d94d83; }
+.legend-dot.serious { background: #8550b2; }
 .legend-dot.unknown { background: #8795a2; }
 .legend-outline { width: 10px; height: 10px; display: inline-block; flex: none; border: 2px solid #60788c; border-radius: 50%; }
 .legend-outline.roadside { border-radius: 1px; transform: rotate(45deg) scale(.8); }
@@ -155,9 +157,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, .station-marker:focu
 .detail-type.roadside { color: #a95032; background: #fff0e9; border-color: #ffd0be; }
 .detail-big strong { color: #3159e8; }
 .detail-big span { color: #6c8497; }
-.risk-badge { background: #d8f5e8; color: #136947; border-radius: 6px; }
-.risk-badge.moderate { background: #fff0ca; color: #8c5400; }
-.risk-badge.high, .risk-badge.very-high, .risk-badge.serious { background: #ffe3e1; color: #a52d3f; }
+.risk-badge { background: #e3f1fc; color: #21679d; border-radius: 6px; }
+.risk-badge.moderate { background: #ecebff; color: #4b55af; }
+.risk-badge.high { background: #ffebe6; color: #b94b39; }
+.risk-badge.very-high { background: #ffe7f0; color: #ad3764; }
+.risk-badge.serious { background: #f2e8fb; color: #733f9d; }
 .risk-badge.unknown { background: #edf2f6; color: #586f81; }
 .detail-divider { background: var(--line); }
 .detail-meta span { color: #6b8395; }
