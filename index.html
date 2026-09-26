@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8fbff">
+  <meta name="description" content="香港户外作业空气风险辅助决策原型：18站官方观测、历史短时预警回测与行业可行性分析。">
+  <title>香港空气风险决策实验室 · 赛道二项目</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./theme-light.css">
+  <link rel="stylesheet" href="./product.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="brand" aria-label="香港空气观测">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>香港空气风险决策实验室</span>
+        <span class="brand-en">AIR RISK LAB</span>
+      </div>
+      <div class="header-actions">
+        <span class="header-location">22°18′ N · 114°10′ E</span>
+        <a href="#evidence" class="header-link">效果验证</a>
+        <a href="#feasibility" class="header-link">可行性分析</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow"><span class="signal-dot"></span> 城市公共服务 · 户外作业风险辅助决策</div>
+          <h1 id="page-title">让空气风险<span>早一步被看见</span></h1>
+          <p class="intro-copy">面向户外作业主管：查看全港 18 站官方观测，利用历史数据验证两小时高风险前兆提醒，并为作业风险复核提供依据。当前预警功能为历史回放原型，尚未用于实时调度。</p>
+        </div>
+        <div class="intro-aside">
+          <span class="aside-label">数据时间 · 香港时间</span>
+          <strong id="data-time">正在读取…</strong>
+          <span id="data-status" class="data-status">连接香港政府开放数据</span>
+        </div>
+      </section>
+
+      <section class="overview" aria-label="全港概览">
+        <div class="stat"><span>监测网络</span><strong>18 <small>个测站</small></strong><em>15 一般 · 3 路边</em></div>
+        <div class="stat"><span>当前可用数据</span><strong id="available-count">— <small>/ 18</small></strong><em>按测站发布的 AQHI</em></div>
+        <div class="stat"><span>一般站范围</span><strong id="general-range">—</strong><em>当前最低至最高指数</em></div>
+        <div class="stat"><span>路边站范围</span><strong id="roadside-range">—</strong><em>繁忙道路附近读数</em></div>
+      </section>
+
+      <div class="prototype-note"><strong>页面状态</strong><span>地图默认显示官方当前观测；切换“历史回放”后显示测试集数据与预警结果。两种时间不可混作实时预测。</span><a href="#evidence">查看验证方法 →</a></div>
+
+      <section class="workspace" aria-label="监测站地图与列表">
+        <aside class="station-panel">
+          <div class="panel-heading">
+            <div><span class="small-label">STATION INDEX</span><h2>测站目录</h2></div>
+            <span class="panel-count" id="list-count">18 站</span>
+          </div>
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="station-search" type="search" placeholder="搜索地区或测站" autocomplete="off" aria-label="搜索地区或测站">
+            <kbd>/</kbd>
+          </label>
+          <div class="filter-tabs" role="group" aria-label="筛选测站类型">
+            <button class="filter active" data-filter="all" type="button">全部 <span>18</span></button>
+            <button class="filter" data-filter="general" type="button">一般 <span>15</span></button>
+            <button class="filter" data-filter="roadside" type="button">路边 <span>3</span></button>
+          </div>
+          <div id="station-list" class="station-list" aria-live="polite"></div>
+        </aside>
+
+        <div class="map-column">
+          <div class="map-toolbar">
+            <div class="map-title"><span class="small-label" id="map-view-kicker">OFFICIAL OBSERVATION</span><h2 id="map-view-title">全港测站当前观测</h2></div>
+            <div class="map-controls">
+              <div class="map-mode" role="group" aria-label="地图时间模式"><button id="map-mode-current" class="active" type="button" aria-pressed="true">当前观测</button><button id="map-mode-history" type="button" aria-pressed="false" disabled>历史回放</button></div>
+              <select id="map-history-hour" class="map-history-hour" aria-label="选择地图历史回放时间" hidden></select>
+              <div class="layer-picker"><button id="layer-menu-button" class="layer-menu-button" type="button" aria-expanded="false" aria-controls="layer-menu">地图图层 <span aria-hidden="true">▾</span></button><div id="layer-menu" class="layer-menu" hidden><span class="layer-menu-title">显示细节</span><label><input id="boundary-toggle" type="checkbox" checked> 行政区界</label><label><input id="station-name-toggle" type="checkbox"> 测站名称</label><label><input id="data-status-toggle" type="checkbox"> 数据状态</label><small class="layer-menu-hint">仅在数据缺失或过期时显示 !</small><label id="outcome-layer-option" hidden><input id="outcome-toggle" type="checkbox" checked> 预警结果</label></div></div>
+              <button id="reset-map" class="icon-button" type="button" aria-label="重置地图缩放" title="重置地图">⟲</button>
+            </div>
+          </div>
+          <div class="map-frame" id="map-frame">
+            <svg id="hk-map" viewBox="0 0 1000 680" role="img" aria-label="香港18区边界与18个空气质素监测站地图">
+              <defs>
+                <pattern id="sea-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#5b7782" stroke-opacity=".12" stroke-width="1"/></pattern>
+                <filter id="marker-shadow" x="-100%" y="-100%" width="300%" height="300%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#061922" flood-opacity=".42"/></filter>
+              </defs>
+              <rect width="1000" height="680" fill="#183440"/>
+              <rect width="1000" height="680" fill="url(#sea-grid)"/>
+              <g id="map-viewport"><g id="district-layer"></g><g id="label-layer"></g><g id="marker-layer"></g></g>
+              <text x="46" y="53" class="map-water-label">珠 江 口 / PEARL RIVER ESTUARY</text>
+              <text x="730" y="626" class="map-water-label">南 中 国 海 / SOUTH CHINA SEA</text>
+            </svg>
+            <div class="map-top-note" id="map-top-note">行政区界反映地理分区，不代表测站覆盖范围</div>
+            <div class="map-legend" aria-label="地图图例">
+              <div class="legend-risk"><span><i class="legend-dot low"></i>低</span><span><i class="legend-dot moderate"></i>中</span><span><i class="legend-dot high"></i>高</span><span><i class="legend-dot very-high"></i>甚高</span><span><i class="legend-dot serious"></i>严重</span><span><i class="legend-dot unknown"></i><b id="unknown-legend-label">缺失/过期</b></span></div>
+              <div class="legend-types"><span><i class="legend-outline general"></i>一般站</span><span><i class="legend-outline roadside"></i>路边站</span><span id="legend-boundary"><i class="legend-line"></i>行政区界</span></div>
+              <div class="legend-outcomes" id="legend-outcomes" hidden><span><i class="outcome-key hit"></i>命中</span><span><i class="outcome-key false-alert"></i>误报</span><span><i class="outcome-key missed"></i>漏报</span></div>
+            </div>
+            <div id="map-popup" class="map-popup" hidden aria-live="polite"></div>
+            <div class="map-zoom"><button id="zoom-in" type="button" aria-label="放大地图">+</button><button id="zoom-out" type="button" aria-label="缩小地图">−</button></div>
+          </div>
+          <div class="map-footnote"><span>区界：香港民政事务总署 · 海岸线：OpenStreetMap 衍生资料</span><span>点位：公开资料约略定位，供区域识别</span></div>
+        </div>
+
+        <aside class="detail-panel" id="detail-panel" aria-live="polite">
+          <span class="small-label">STATION DETAIL</span>
+          <div id="station-detail"></div>
+        </aside>
+      </section>
+
+      <section class="evidence-section" id="evidence" aria-labelledby="evidence-heading">
+        <div class="section-lead"><div><span class="small-label">EVIDENCE FIRST</span><h2 id="evidence-heading">先验证，再预警</h2></div><p>任务：测站当前 AQHI 低于 7 时，判断未来两小时是否首次达到 7 或以上。只用预测时已经可获得的观测。</p></div>
+        <div class="evidence-callout" id="evidence-decision">正在读取回测结果…</div>
+        <div class="evidence-stats" id="evidence-stats" aria-live="polite"></div>
+        <div class="evidence-comparison"><div><h3>独立时间测试结果</h3><p>规则、简单阈值和实验模型使用同一批可评价的逐站小时。指标是逐小时决策表现，不等于独立污染事件数量。</p></div><div id="comparison-table" class="comparison-table"></div></div>
+        <p class="evidence-method" id="evidence-method"></p>
+      </section>
+
+      <section class="replay-section" id="replay" aria-labelledby="replay-heading">
+        <div class="section-lead"><div><span class="small-label">HISTORICAL REPLAY</span><h2 id="replay-heading">把一次预警放回历史现场</h2></div><p>选择测试集中的时间，核对规则是否报警，以及随后两小时是否真的达到高风险。这里不显示“今天的预测”。</p></div>
+        <div class="replay-card"><div class="replay-controls"><label for="replay-hour">历史时刻 · 香港时间</label><select id="replay-hour" aria-label="选择历史回放时刻"></select><span id="replay-summary"></span></div><div id="replay-list" class="replay-list" aria-live="polite"></div><p class="replay-note">仅供核验模型与规则；测站值不代表整个行政区或实际作业地点。</p></div>
+      </section>
+
+      <section class="workflow-section" id="workflow" aria-labelledby="workflow-heading">
+        <div class="section-lead"><div><span class="small-label">INDUSTRY WORKFLOW</span><h2 id="workflow-heading">给户外作业主管的三步流程</h2></div><p>产品建议，尚未经过真实作业单位试点。系统提供复核提醒，不自动改变排班。</p></div>
+        <div class="workflow-grid"><article><span>01 / 发现</span><h3>识别前兆</h3><p>站点 AQHI 为 6 且较前一小时上升时，标为“未来两小时高风险复核提醒”。同时检查数据是否缺失或过期。</p></article><article><span>02 / 核对</span><h3>结合任务地点</h3><p>主管核对作业地点、任务紧急程度、官方最新信息与站点代表性。邻近测站只能提供参考，不能当作街道级读数。</p></article><article><span>03 / 记录</span><h3>人工决策</h3><p>记录“继续／改时／再核对”及理由。AQHI 7 本身不等于停工建议；较高风险时应依据<a href="https://www.aqhi.gov.hk/sc/health-advice/sub-health-advice.html" target="_blank" rel="noopener noreferrer">环保署户外雇员建议 ↗</a>评估。真实效益仍需试点验证。</p></article></div>
+      </section>
+
+      <section class="feasibility-section" id="feasibility" aria-labelledby="feasibility-heading">
+        <div class="section-lead"><div><span class="small-label">VIABILITY</span><h2 id="feasibility-heading">可行性与尚待验证的假设</h2></div><p>把数据证据、设计判断和商业假设分开，避免把原型写成已部署系统。</p></div>
+        <div class="feasibility-grid"><article><span class="feasibility-tag fact">已核实</span><h3>技术与数据</h3><p>环保署提供逐站逐小时历史 AQHI；当前观测与站型预报可接入网页。正式在线预警仍需持续采集最近数小时数据、监控时效和部署服务。</p></article><article><span class="feasibility-tag assumption">待访谈</span><h3>目标用户与市场</h3><p><a href="https://www.fehd.gov.hk/english/legco/2025-26/EEB%28F%29088.pdf" target="_blank" rel="noopener noreferrer">食环署公开资料 ↗</a>证实香港有外判街道清洁服务；这只说明潜在应用场景存在。主管工作流程、采购意愿与可接受误报量仍须访谈验证。</p></article><article><span class="feasibility-tag assumption">待报价</span><h3>成本收益</h3><p>年成本＝数据采集与存储＋模型与网页服务＋通知渠道＋人工维护。收益需用真实任务记录计算节省的复核时间和调整成本，不预填虚构金额。</p></article><article><span class="feasibility-tag risk">须控制</span><h3>风险与责任</h3><p>重点控制漏报、误报、接口中断和测站代表性。过期或缺失时不出新的预警；主管保留最终决定权；不宣称已减少健康损害。</p></article></div>
+        <details class="technical-detail"><summary>查看技术架构与部署缺口</summary><div><p><strong>已有：</strong>官方当前值接口 → 前端数据校验与过期提示 → 18 站地图；官方历史 CSV → 缺失及 * 标记处理 → 按时间切分回测 → 历史回放。</p><p><strong>上线前需要：</strong>定时采集器保存最近至少 3 小时测站数据；每小时运行已验证规则；监控数据延迟；为主管建立通知和处理记录。发生数据中断时停止发出新提醒，并显示官方原始页面链接。</p></div></details>
+        <div class="cost-scenario"><div><span class="small-label">ASSUMPTION WORKSHEET</span><h3>试点成本情景计算</h3><p>下面的数字由使用者填写，不是市场报价或已实现收益。只计算节省人工复核时间的情景，未计误报处理和潜在健康收益。</p></div><form id="cost-form" class="cost-form"><label>年需复核次数<input id="cost-checks" type="number" min="0" step="1" inputmode="numeric" placeholder="填入试点估计"></label><label>每次节省分钟<input id="cost-minutes" type="number" min="0" step="0.1" inputmode="decimal" placeholder="填入试点估计"></label><label>人工每小时成本（港元）<input id="cost-hourly" type="number" min="0" step="0.1" inputmode="decimal" placeholder="填入实际成本"></label><label>系统年成本（港元）<input id="cost-annual" type="number" min="0" step="0.1" inputmode="decimal" placeholder="填入实际报价"></label><output id="cost-output">输入四项假设后显示年净额。</output></form></div>
+      </section>
+
+      <section class="decision-section" aria-labelledby="decision-heading">
+        <div class="section-lead"><div><span class="small-label">OFFICIAL FORECAST</span><h2 id="decision-heading">官方时段预报</h2></div><p>官方预报按“一般 / 路边”两类发布；它与上方的逐站历史回测任务不同，不能直接作为同尺度对照。</p></div>
+        <div id="forecast-grid" class="forecast-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="method-section" id="sources" aria-labelledby="method-heading">
+        <div><span class="small-label">READ THE MAP RIGHT</span><h2 id="method-heading">这张图如何解读</h2></div>
+        <div class="method-grid">
+          <div><span class="method-index">01</span><h3>一个点，一处观测</h3><p>AQHI 是监测站报告的短期健康风险指数。周围整个行政区并非同一读数。</p></div>
+          <div><span class="method-index">02</span><h3>先看站型</h3><p>一般站反映日常环境，路边站适合观察繁忙道路附近的暴露情况，两类读数不应混为同一区域平均值。</p></div>
+          <div><span class="method-index">03</span><h3>留意发布时间</h3><p>官方目标为逐小时更新。若来源中断或时间较旧，网页会清楚标示，避免把历史读数误看作实时结果。</p></div>
+        </div>
+        <div class="sources"><strong>数据来源</strong><a href="https://data.gov.hk/en-data/dataset/hk-dpo-datagovhk2-city-dashboard-aqhi" target="_blank" rel="noopener noreferrer">逐站 AQHI 与站型预报 ↗</a><a href="https://data.gov.hk/en-data/dataset/hk-had-json1-hong-kong-administrative-boundaries" target="_blank" rel="noopener noreferrer">香港 18 区边界 ↗</a><a href="https://github.com/bmkor/hk_osm_map" target="_blank" rel="noopener noreferrer">海岸线资料 ↗</a><a href="https://www.aqhi.gov.hk/en/what-is-aqhi/about-aqhi.html" target="_blank" rel="noopener noreferrer">AQHI 说明 ↗</a></div>
+      </section>
+    </main>
+    <footer><span>香港空气风险决策实验室 · 赛道二研究原型</span><span>数据来自香港政府开放数据 · 非官方预警平台</span></footer>
+  </div>
+  <script src="./app.js" defer></script>
+  <script src="./evidence.js" defer></script>
+</body>
+</html>
